@@ -1,0 +1,13 @@
+{
+  "image": "://microsoft.com",
+  "postCreateCommand": "sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y wine64 wine32 xvfb x11vnc fluxbox websockify novnc",
+  "postStartCommand": "nohup Xvfb :1 -screen 0 1280x720x16 >/dev/null 2>&1 & nohup env DISPLAY=:1 fluxbox >/dev/null 2>&1 & nohup x11vnc -display :1 -nopw -forever -shared >/dev/null 2>&1 & nohup websockify --web=/usr/share/novnc/ 6080 localhost:5900 >/dev/null 2>&1 &",
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": {
+      "label": "Virtual Desktop",
+      "visibility": "public",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}
